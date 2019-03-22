@@ -11,7 +11,6 @@ Just a simple android application, developed for education purposes.
 ### Preview
 
 ![screencapture1](https://imgur.com/ei9CJ8F.gif)
-<img src="https://imgur.com/ei9CJ8F.gif" hight="400px">
 *general application overview*
 <br />
 <br />
