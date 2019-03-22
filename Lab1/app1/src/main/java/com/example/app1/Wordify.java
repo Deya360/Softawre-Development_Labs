@@ -1,5 +1,7 @@
 package com.example.app1;
 
+
+//Credit to Source: https://ru.stackoverflow.com/a/604682
 public class Wordify {
     private static final String dig1[][] = {{"одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"},
                                             {"один", "два"}};
