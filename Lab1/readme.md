@@ -10,14 +10,13 @@ Just a simple android application, developed for education purposes.
 #
 ### Preview
 
-![screencapture1](https://imgur.com/k63hnGO.gif)
-*general application overview*
+<img src="https://github.com/Deya360/Softawre-Development_Labs/blob/master/Lab1/screencapture1.gif"/>
+*general application showcase*
 <br />
 <br />
 
-![screencapture2](https://imgur.com/B9o8Yln.gif)
-
-*vertical screen oriantation compatibility*
+<img src="https://github.com/Deya360/Softawre-Development_Labs/blob/master/Lab1/screencapture2.gif"/>
+*vertical screen oriantation compatibility showcase*
 
 #
 ### Libraries Used
