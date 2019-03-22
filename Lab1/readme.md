@@ -4,13 +4,13 @@ Just a simple android application, developed for education purposes.
 
 ### Cool Features
 - Listview item images are populated with randomly generated avatar images from [Divebear's Online API][link1].
-- Smart image loading: if not internet connection is available, Listview item images are populated randomly from local album gallery.
+- Smart image loading: if no internet connection is available, Listview item images are populated randomly from a local album gallery.
 - Any item in the Listview can be viewed individually in a detailed activity, with enlarged image and text size.
 
 #
 ### Preview
 
-![screencapture1](https://imgur.com/ei9CJ8F.gif)
+![screencapture1](https://imgur.com/k63hnGO.gif)
 *general application overview*
 <br />
 <br />
