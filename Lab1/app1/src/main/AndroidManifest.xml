@@ -16,7 +16,8 @@
             android:label="A close up!"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="Challenge: Scroll till end"></activity>
+            android:label="Challenge: Scroll till end"
+            android:launchMode="singleTask"></activity>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
