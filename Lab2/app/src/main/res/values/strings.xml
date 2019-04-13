@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Duo App</string>
+
+    <string name="image_tph">image</string>
+
+    <string name="jsonTextURL">https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/data/techs.ruleset.json</string>
+    <string name="jsonImageURLPrefix">https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/images/tech/</string>
+
+    <string name="listFragTag">listFrag</string>
+    <string name="viewFragTag">viewFrag</string>
+
+</resources>
