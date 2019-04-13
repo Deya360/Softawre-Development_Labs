@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
-    ListView myLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
