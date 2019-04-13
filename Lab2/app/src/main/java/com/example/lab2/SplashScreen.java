@@ -24,10 +24,6 @@ import java.net.URL;
 
 
 public class SplashScreen extends AppCompatActivity {
-    volatile boolean stop = false;
-
-    ImageView iv;
-    Animation fade_in, push_up;
 
     fetchData dataFetcher_AsyncTask;
     @Override
@@ -36,7 +32,7 @@ public class SplashScreen extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
         setContentView(R.layout.activity_splash_screen);
 
-        iv = (ImageView)findViewById(R.id.iv1);
+        ImageView iv = (ImageView)findViewById(R.id.iv1);
 
         AnimationSet animationSet = new AnimationSet(true);
         animationSet.addAnimation(AnimationUtils.loadAnimation(this,R.anim.fade_in));
