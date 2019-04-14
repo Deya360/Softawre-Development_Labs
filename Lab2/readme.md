@@ -2,20 +2,23 @@
 
 Just a android application, developed for education purposes.
 
-#
-### Preview
 
 ### Cool Features
 - The item list supports the Swipe Down to Refresh feature. Thus, the application no longer needs to be restarted to Load or Update the item list. 
 
 
+#
+### Preview
+
+
 *general application showcase*
-<br />
-<img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture1.gif"/>
-<br />
+<br /><img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture1.gif"/>
+
 *swipe to refresh showcase*
-<br />
-<img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture2.gif"/>
+<br /><img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture2.gif"/>
+
+*content provider showcase*
+<br /><img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture3.gif"/>
 
 
 #
