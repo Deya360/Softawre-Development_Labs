@@ -2,7 +2,6 @@ package com.example.lab2;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,14 +13,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 interface OnTaskCompleted{
     void onTaskCompleted(Boolean success);
 }
 
-public class DataFetcher extends AsyncTask<Void,Void,Boolean> {
+public class DataFetcher extends AsyncTask<String,Void,Boolean> {
     private WeakReference<Context> context;
     private OnTaskCompleted listener;
 
@@ -31,8 +29,8 @@ public class DataFetcher extends AsyncTask<Void,Void,Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
-        String urlPath = context.get().getResources().getString(R.string.jsonTextURL);
+    protected Boolean doInBackground(String... strings) {
+        String urlPath = strings[0];
         try {
             URL url = new URL(urlPath);
 
@@ -47,7 +45,7 @@ public class DataFetcher extends AsyncTask<Void,Void,Boolean> {
                 jsonSB.append(line);
             }
 
-            Data.clear();
+            Data.clear(context.get());
 
             try {
                 JSONArray arr = new JSONArray(jsonSB.toString());
@@ -58,7 +56,7 @@ public class DataFetcher extends AsyncTask<Void,Void,Boolean> {
                         Item it = new Item(obj.optString("name"),
                                 obj.optString("helptext"),
                                 obj.optString("graphic"));
-                        Data.addItem(it);
+                        Data.addItem(it, context.get());
                     }
 
                     if (isCancelled()) break;

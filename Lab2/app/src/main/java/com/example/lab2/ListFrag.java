@@ -63,7 +63,7 @@ public class ListFrag extends ListFragment {
                 };
 
                 dataFetcherTask = new DataFetcher(getActivity(), localListener);
-                dataFetcherTask.execute();
+                dataFetcherTask.execute(getResources().getString(R.string.jsonTextURL));
             }
         });
 

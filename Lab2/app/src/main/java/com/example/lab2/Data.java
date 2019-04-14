@@ -1,5 +1,8 @@
 package com.example.lab2;
 
+import android.content.ContentValues;
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class Data {
@@ -23,6 +26,15 @@ public class Data {
     public static void addItem(Item it) {
         itemArr.add(it);
     }
+    public static void addItem(Item it, Context context) {
+        addItem(it);
+        ContentValues values = new ContentValues();
+        values.put(TechnologyProvider.COLUMN_NAME,it.getName());
+        values.put(TechnologyProvider.COLUMN_HELPTEXT,it.getHelptext());
+        values.put(TechnologyProvider.COLUMN_GRAPHIC,it.getImageURLSuffix());
+
+        context.getContentResolver().insert(TechnologyProvider.CONTENT_URI, values);
+    }
     public static Item getItem(int pos) {
         return itemArr.get(pos);
     }
@@ -32,4 +44,10 @@ public class Data {
     public static void clear() {
         itemArr.clear();
     }
+    public static void clear(Context context) {
+        clear();
+        context.getContentResolver().delete(TechnologyProvider.CONTENT_URI, null, null);
+    }
+
 }
+

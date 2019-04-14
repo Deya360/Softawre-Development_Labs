@@ -40,7 +40,7 @@ public class SplashScreen extends AppCompatActivity{
         };
 
         dataFetcherTask = new DataFetcher(this.getApplicationContext(), localListener);
-        dataFetcherTask.execute();
+        dataFetcherTask.execute(getResources().getString(R.string.jsonTextURL));
     }
 
     @Override
