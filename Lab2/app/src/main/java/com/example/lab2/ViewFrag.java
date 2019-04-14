@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +64,12 @@ class CustomViewPagerAdapter extends PagerAdapter {
         ImageView iv = (ImageView)view.findViewById(R.id.imageView);
         TextView tvN = (TextView)view.findViewById(R.id.textViewN);
         TextView tvH = (TextView)view.findViewById(R.id.textViewH);
+        tvH.setMovementMethod(new ScrollingMovementMethod());
+
         Item it = Data.getItem(position);
 
         tvN.setText(it.getName());
-        tvH.setText(it.getHelptext());
+        tvH.setText(it.getHelptext().trim());
         Glide.with(container)
                 .load(context.getResources().getString(R.string.jsonImageURLPrefix) + it.getImageURLSuffix())
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA))
