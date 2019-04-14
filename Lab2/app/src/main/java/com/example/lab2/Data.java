@@ -28,4 +28,8 @@ public class Data {
     }
 
     public static int getSize() {return itemArr.size();}
+
+    public static void clear() {
+        itemArr.clear();
+    }
 }

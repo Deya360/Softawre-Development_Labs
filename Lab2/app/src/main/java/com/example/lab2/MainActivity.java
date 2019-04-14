@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
-    ListView myLv;
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +13,10 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
         setContentView(R.layout.activity_main);
 
+        startListFrag();
+    }
+
+    private void startListFrag() {
         String tag = getResources().getString(R.string.listFragTag);
 
         FragmentManager manager = getSupportFragmentManager();
@@ -26,7 +28,27 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.MainLayout,listFrag,tag)
                     .commit();
         }
-    }
 
+    }
 }
 
+//Snippet for Later: Displaying GIF error image (using Glide)
+//final Handler handler = new Handler();
+//..
+//.listener(new RequestListener<Drawable>() {
+//                    @Override
+//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                        handler.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Glide.with(parent).load(R.drawable.loading2).into(vh.Iv);
+//                            }
+//                        });
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                        return false;
+//                    }
+//                })

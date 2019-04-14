@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +23,60 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-
 public class ListFrag extends ListFragment {
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    DataFetcher dataFetcherTask;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Create the list fragment's content view by calling the super method
+        final View listFragmentView = super.onCreateView(inflater, container, savedInstanceState);
+
+        // Now create a SwipeRefreshLayout to wrap the fragment's content view
+        mSwipeRefreshLayout = new ListFragmentSwipeRefreshLayout(container.getContext());
+
+        // Add the list fragment's content view to the SwipeRefreshLayout, making sure that it fills the SwipeRefreshLayout
+        mSwipeRefreshLayout.addView(listFragmentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        // Make sure that the SwipeRefreshLayout will fill the fragment
+        mSwipeRefreshLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(getActivity(), "Refreshing...", Toast.LENGTH_SHORT).show();
+
+                OnTaskCompleted localListener = new OnTaskCompleted() {
+                    @Override
+                    public void onTaskCompleted(Boolean success) {
+                        if(success) {
+                            Toast.makeText(getActivity(), "Refresh Completed", Toast.LENGTH_SHORT).show();
+                            populateData();
+                        } else {
+                            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
+
+                        mSwipeRefreshLayout.setRefreshing(false);
+
+                    }
+                };
+
+                dataFetcherTask = new DataFetcher(getActivity(), localListener);
+                dataFetcherTask.execute();
+            }
+        });
+
+        return mSwipeRefreshLayout;
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayList<Item> dataArr = Data.getData();
         setEmptyText("Error Loading Items");
-        setListAdapter(new CustomListAdapter(getActivity(), dataArr));
         getListView().setFastScrollEnabled(true);
+        populateData();
     }
 
     @Override
@@ -52,6 +97,40 @@ public class ListFrag extends ListFragment {
                 .replace(R.id.MainLayout,viewFrag,getResources().getString(R.string.viewFragTag))
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if(dataFetcherTask != null)
+            dataFetcherTask.cancel(true);
+        super.onDestroyView();
+    }
+
+    public void populateData() {
+        ArrayList<Item> dataArr = Data.getData();
+        setListAdapter(new CustomListAdapter(getActivity(), dataArr));
+    }
+
+
+
+    private class ListFragmentSwipeRefreshLayout extends SwipeRefreshLayout {
+        public ListFragmentSwipeRefreshLayout(Context context) {
+            super(context);
+        }
+
+        @Override
+        public boolean canChildScrollUp() {
+            final ListView listView = getListView();
+            if (listView.getVisibility() == View.VISIBLE) {
+                return canListViewScrollUp(listView);
+            } else {
+                return false;
+            }
+        }
+
+    }
+    private static boolean canListViewScrollUp(ListView listView) {
+        return listView.canScrollVertically(-1);
     }
 }
 
