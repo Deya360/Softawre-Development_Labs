@@ -46,6 +46,7 @@ public class DataFetcher extends AsyncTask<String,Void,Boolean> {
             }
 
             Data.clear(context.get());
+            Data.saveToFile(context.get(),jsonSB.toString());
 
             try {
                 JSONArray arr = new JSONArray(jsonSB.toString());

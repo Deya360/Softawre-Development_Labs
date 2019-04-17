@@ -1,8 +1,13 @@
 package com.example.lab2;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity{
@@ -12,6 +17,12 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in,R.anim.slide_out);
         setContentView(R.layout.activity_main);
+
+        //request write permission\
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
 
         startListFrag();
     }
