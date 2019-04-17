@@ -5,6 +5,7 @@ Just a android application, developed for education purposes.
 
 ### Cool Features
 - The item list supports the Swipe Down to Refresh feature. Thus, the application no longer needs to be restarted to Load or Update the item list. 
+- The application saves the raw input JSON-file to phone storage. Thus, repeated downloading of the file from the Internet is no longer necessary, which saves network-traffic, allows the application to run in offline-mode and allows further processing to be done on the file.
 
 
 #
@@ -20,6 +21,8 @@ Just a android application, developed for education purposes.
 *content provider showcase*
 <br /><img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture3.gif"/>
 
+*JSON-file saving showcase*
+<br /><img src="https://github.com/Deya360/Softawre-Development_Labs/blob/main/Lab2/screencapture4.gif"/>
 
 #
 ### Libraries Used
