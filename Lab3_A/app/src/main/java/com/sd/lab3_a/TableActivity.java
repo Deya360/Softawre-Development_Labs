@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,10 @@ public class TableActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new TableAdapter(array));
+
+        if (array.size()==0) {
+            Toast.makeText(this, "No Items to Show!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     void populateArrayList() {

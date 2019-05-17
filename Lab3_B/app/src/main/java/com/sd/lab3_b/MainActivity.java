@@ -17,10 +17,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
     static final Uri CONTENT_URI = Uri.parse("content://com.sd.lab3_a.StudentProvider/cpstudents");
 
     private static final int DEFAULT_ROW_COUNT = 5;
-    private static boolean isUpgraded = false;
     private DatabaseHelper mDatabaseHelper;
 
-    private Button insertBtn, updateBtn;
+    private Button insertBtn, updateBtn, upgradeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +38,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         updateBtn = findViewById(R.id.update_button);
         updateBtn.setOnClickListener(this);
 
-        Button upgradeBtn = findViewById(R.id.upgrade_button);
+        upgradeBtn = findViewById(R.id.upgrade_button);
         upgradeBtn.setOnClickListener(this);
+
+        Button refreshBtn = findViewById(R.id.refresh_button);
+        refreshBtn.setOnClickListener(this);
     }
 
     void execDBInitCommands() {
@@ -50,12 +52,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         String[] projection = new String[]{"id","full_name","date_added"};
         Cursor cursor = getContentResolver().query(CONTENT_URI, projection, null, null, null);
 
-        while (cursor.moveToNext()) {
-            Student s = new Student(cursor.getInt(0),
-                                    cursor.getString(1),
-                                    cursor.getLong(2));
-            mDatabaseHelper.addDataSupport(s);
+        if (cursor!= null) {
+            while (cursor.moveToNext()) {
+                Student s = new Student(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getLong(2));
+                mDatabaseHelper.addDataSupport(s);
+            }
+
+            Toast.makeText(MainActivity.this, "Item Count: " + cursor.getCount(), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     Student generateRandStudent() {
@@ -85,8 +92,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 
             case R.id.upgrade_button:
                 DatabaseHelper.upgrade();
+                upgradeBtn.setEnabled(false);
                 insertBtn.setEnabled(true);
                 updateBtn.setEnabled(true);
+                Toast.makeText(MainActivity.this, "Upgrade Successful!", Toast.LENGTH_SHORT).show();
+                return;
+
+            case R.id.refresh_button:
+                if (DatabaseHelper.getDbVersion()!=1) {
+                    DatabaseHelper.downgrade();
+                    upgradeBtn.setEnabled(true);
+                    insertBtn.setEnabled(false);
+                    updateBtn.setEnabled(false);
+                }
+                execDBInitCommands();
                 return;
 
             default:

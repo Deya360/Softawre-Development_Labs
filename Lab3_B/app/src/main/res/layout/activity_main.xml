@@ -47,4 +47,14 @@
         android:layout_marginTop="70dp"
 
         android:text="Simulate Database Upgrade" />
+
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="25dp"
+
+        android:text="Refresh Content" />
+
 </LinearLayout>

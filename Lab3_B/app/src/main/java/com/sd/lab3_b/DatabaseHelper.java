@@ -14,11 +14,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String idCol = "id";
-    private static final String dateAddedCol = "date_added";
-
     private static final String lastNameCol = "last_name";
     private static final String firstNameCol = "first_name";
     private static final String middleNameCol = "middle_name";
+    private static final String dateAddedCol = "date_added";
 
     //Support:
     private static final String fullNameCol = "full_name";
@@ -46,21 +45,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 *  and then loaded it back again after adding the necessary columns,
                 *  however, doing it via sql was more challenging and interesting */
 
-                db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME + "_old ");
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " RENAME TO " + TABLE_NAME + "_old " + ";");
+                //Rename previous version's table for later data migration
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME + "_old");
+                db.execSQL("ALTER TABLE " + TABLE_NAME + " RENAME TO " + TABLE_NAME + "_old;");
 
+                //Create new table using v2 scheme
                 onCreate(db);
 
-                db.execSQL("INSERT INTO student(" + idCol + ", " + dateAddedCol + ") SELECT " + idCol + ", " + dateAddedCol + " FROM " + TABLE_NAME + "_old " + ";");
-
-
-                String fnlCol = fullNameCol;
-                db.execSQL("UPDATE " + TABLE_NAME + " SET "
-                        + firstNameCol + " = SUBSTR(" + fnlCol + ", 1, INSTR(" + fnlCol + ", ' ')-1),"
-                        + middleNameCol + " = SUBSTR(" + fnlCol + ", INSTR(" + fnlCol + ", ' ')+1, INSTR(SUBSTR(" + fnlCol + ", INSTR(" + fnlCol + ", ' ')+1), ' ')-1),"
-                        + lastNameCol + " = SUBSTR(" + fnlCol + ", INSTR(SUBSTR(" + fnlCol + ", INSTR(" + fnlCol + ", ' ')+1), ' ')+ INSTR(" + fnlCol + ", ' ')+1)");
-
-                db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME + "_old ");
+                /* Insert data from old students table
+                * (this ended up being so lengthy because of Sqlites limited number of functions) */
+                db.execSQL("INSERT INTO " + TABLE_NAME + "("+ idCol +","+ lastNameCol +","+ firstNameCol +","+ middleNameCol +","+ dateAddedCol +") " +
+                        "SELECT "+ idCol +", " +
+                        "SUBSTR("+ fullNameCol +", 1, INSTR("+ fullNameCol +", ' ')-1) ln, " +
+                        "SUBSTR("+ fullNameCol +", INSTR("+ fullNameCol +", ' ')+1, INSTR(SUBSTR("+ fullNameCol +", INSTR("+ fullNameCol +", ' ')+1), ' ')-1) fn, " +
+                        "SUBSTR("+ fullNameCol +", INSTR(SUBSTR("+ fullNameCol +", INSTR("+ fullNameCol +", ' ')+1), ' ')+ INSTR("+ fullNameCol +", ' ')+1) md, " +
+                        dateAddedCol +" " +
+                        "FROM " + TABLE_NAME + "_old ");
 
             } catch (SQLiteException ex) {
                 Log.w(TAG, "Altering " + TABLE_NAME + ": " + ex.getMessage());
@@ -126,10 +126,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    // THESE FUNCTIONS ARE STRICTLY FOR TESTING PURPOSES ONLY!
+    // otherwise, DB_VERSION should never be changed at runtime
     public static int getDbVersion() {
         return DB_VERSION;
     }
     public static void upgrade() {
         DB_VERSION=2;
+    }
+    public static void downgrade() {
+        DB_VERSION=1;
     }
 }

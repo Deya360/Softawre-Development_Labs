@@ -1,6 +1,5 @@
 package com.sd.lab3_b;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +50,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableHolder>
         return new TableHolder(itemView);
     }
 
-    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull TableHolder holder, int pos) {
         Student currentStudent = students.get(pos);
